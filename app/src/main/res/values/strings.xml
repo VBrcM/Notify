@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Notify</string>
+    <string name="SignupHead">Sign Up</string>
+    <string name="UnInput">Username</string>
+    <string name="LoginHead">Log In</string>
+    <string name="groupHead">Groups</string>
+    <string name="add_alarm">Add Alarm</string>
+    <string name="my_channel_01">my_channel_01</string>
+    <string name="add_reminder">Add Reminder</string>
+</resources>

@@ -1,0 +1,46 @@
+Index: app/src/main/java/com/example/notify/auth/AuthRepositoryImpl.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/notify/auth/AuthRepositoryImpl.kt b/app/src/main/java/com/example/notify/auth/AuthRepositoryImpl.kt
+--- a/app/src/main/java/com/example/notify/auth/AuthRepositoryImpl.kt	
++++ b/app/src/main/java/com/example/notify/auth/AuthRepositoryImpl.kt	(date 1713559378050)
+@@ -12,10 +12,7 @@
+ class AuthRepositoryImpl @Inject constructor(
+     private val firebaseAuth: FirebaseAuth
+ ) : AuthRepository {
+-    override fun loginUser(
+-        email: String,
+-        password: String
+-    ): Flow<Resource<AuthResult>> {
++    override fun loginUser(email: String, password: String): Flow<Resource<AuthResult>> {
+         return flow {
+             emit(Resource.Loading())
+             val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+@@ -25,16 +22,11 @@
+         }
+     }
+ 
+-    override fun signupUser(
+-        email: String,
+-        password: String
+-    ): Flow<Resource<AuthResult>> {
+-        return flow {
+-            emit(Resource.Loading())
+-            val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+-            emit(Resource.Success(result))
+-        }.catch {
+-            emit(Resource.Error(it.message.toString()))
++    override fun signupUser(email: String, password: String): Resource<Unit> {
++        return try {
++            firebaseAuth.createUserWithEmailAndPassword(email, password)
++            Resource.Success(Unit)
++        } catch (e: Exception) {
++            Resource.Error(e.message ?: "An unknown error occurred")
+         }
+-    }
+-}
+\ No newline at end of file
++    }}
+\ No newline at end of file
